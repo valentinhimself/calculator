@@ -28,6 +28,21 @@
     background-color: white;
     margin: 5px 0 15px 0;
     border-radius: 7px;
+    padding: 10px;
+}
+
+#last-operation {
+    min-height: 32px;
+    font-size: 20px;
+}
+
+#current-operation {
+    min-height: 64px;
+    font-size: 40px;
+}
+
+#last-operation, #current-operation {
+    text-align: right;
 }
 
 .buttons-area {

@@ -12,30 +12,123 @@
 <body>
     <div class="main">
         <div class="calculator">
-            <div class="screen"></div>
-            <div class="buttons-area top">
-                <button id="clear">Clear</button>
-                <button id="delete">Delete</button>
+            <div class="screen">
+                <div id="last-operation"></div>
+                <div id="current-operation"></div>
             </div>
-            <div class="buttons-area">
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
-                <button>&#247;</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>&#0215;</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>-</button>
-                <button>.</button>
-                <button>0</button>
-                <button>=</button>
-                <button>+</button>
+            <div class="buttons-area top">
+                <button id="clear" value="clear">Clear</button>
+                <button id="delete" value="delete">Delete</button>
+            </div>
+            <div class="buttons-area" id="working-area">
+                <button class="num" value="7">7</button>
+                <button class="num" value="8">8</button>
+                <button class="num" value="9">9</button>
+                <button class="operator" value="/">&#247;</button>
+                <button class="num" value="4">4</button>
+                <button class="num" value="5">5</button>
+                <button class="num" value="6">6</button>
+                <button class="operator" value="*">&#0215;</button>
+                <button class="num" value="1">1</button>
+                <button class="num" value="2">2</button>
+                <button class="num" value="3">3</button>
+                <button class="operator" value="-">-</button>
+                <button class="point" value=".">.</button>
+                <button class="num" value="0">0</button>
+                <button class="equality" value="=">=</button>
+                <button class="operator" value="+">+</button>
             </div>
         </div>
     </div>
 </body>
+
+<script>
+//initiateCalculator ();
+
+ //   function initiateCalculator () {
+        const numbers = document.querySelectorAll ('.num');
+        const operators = document.querySelectorAll ('.operator');
+        const point = document.querySelector ('.point');
+        const equality = document.querySelector ('.equality');
+        let currentOperation = document.querySelector("#current-operation");
+        let lastOperation = document.querySelector("#last-operation");
+        const zero = document.createElement('span');
+        let currentValue = document.createElement('span');
+        let lastValue = document.createElement ('span');
+
+        //zero.textContent = 0;
+        //currentOperation.appendChild(zero);
+        currentOperation.textContent = 0;
+
+        numbers.forEach(number => number.addEventListener('click', setCurrentValue));
+        operators.forEach(operator => operator.addEventListener('click', operate))
+
+        let obj = {
+        currentValue: 0,
+        lastValue: 0,
+        operator: '',
+        }
+
+        function setCurrentValue (e) {
+
+            if (obj.currentValue == 0) {
+                obj.currentValue = e.target.value;
+                //currentOperation.textContent = obj.currentValue
+                //currentValue.textContent = obj.currentValue;
+                //currentOperation.replaceChild(currentValue, zero)
+            }
+            else {
+                obj.currentValue += e.target.value;
+                //currentOperation.textContent = obj.currentValue
+                //urrentValue.textContent = obj.currentValue;
+            }
+            currentOperation.textContent = obj.currentValue
+        }
+
+        function moveValues() {
+            obj.lastValue = obj.currentValue;
+            lastOperation.textContent = obj.lastValue;
+            obj.currentValue = 0;
+
+        }
+        function operate(e) {
+            switch (e.target.value) {
+                case '/':
+                    divide ();
+                    break    
+                case '*':
+                    multiply ();
+                    break  
+                case '+':
+                    add() ; 
+                    break  
+                case '-':
+                    subtract(); 
+                    break          
+            }
+            moveValues()
+        }
+
+
+   function add() {
+       console.log(currentValue + lastValue)
+       return currentValue + lastValue;
+   }
+
+   function subtract() {
+       return lastValue - currentValue;
+   }
+
+   function multiply() {
+       return lastValue * currentValue;
+   }
+
+   function divide() {
+       return lastValue / currentValue;
+   }
+
+
+
+//}
+</script>
 </html>
