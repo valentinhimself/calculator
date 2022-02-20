@@ -56,7 +56,7 @@
         //let flag = false;
 
         currentOperation.textContent = 0;
-        numbers.forEach(number => number.addEventListener('click', setNumber));
+        numbers.forEach(number => number.addEventListener('click', setNumbers));
         operators.forEach(operator => operator.addEventListener('click', selectOperator));
         equality.addEventListener('click', operate)
 
@@ -71,18 +71,20 @@
             operatorCounter: 0,
         };
 
-        function setNumber(e) {
-        // functions sets the first and second number. The second part of the code executes after operator is selected"
-            if (obj.switchNumberFlag===false) {
-                obj.firstValue === 0 ? obj.firstValue = e.target.value : obj.firstValue += e.target.value;
-                obj.firstValue[0] == 0 && obj.firstValue.length > 1 ? obj.firstValue = obj.firstValue.slice(1) : obj.firstValue = obj.firstValue; // if 0 is selected first
-                currentOperation.textContent = obj.firstValue;
-            }
-            else {
-                obj.secondValue === 0 ? obj.secondValue = e.target.value : obj.secondValue += e.target.value;
-                obj.secondValue[0] == 0 && obj.secondValue.length > 1 ? obj.secondValue = obj.secondValue.slice(1) : obj.secondValue = obj.secondValue; // if 0 is selected first
-                currentOperation.textContent = obj.secondValue;
-            }
+        function setNumbers(e) {
+        // switch functions to set First, then second number.
+            obj.switchNumberFlag === false ? setFirstNumber (e) : setSecondNumber (e);
+        }
+        function setFirstNumber (e) {
+            obj.firstValue === 0 ? obj.firstValue = e.target.value : obj.firstValue += e.target.value;
+            obj.firstValue[0] == 0 && obj.firstValue.length > 1 ? obj.firstValue = obj.firstValue.slice(1) : obj.firstValue = obj.firstValue; // if 0 is selected first
+            currentOperation.textContent = obj.firstValue;
+        }
+
+        function setSecondNumber (e) {
+            obj.secondValue === 0 ? obj.secondValue = e.target.value : obj.secondValue += e.target.value;
+            obj.secondValue[0] == 0 && obj.secondValue.length > 1 ? obj.secondValue = obj.secondValue.slice(1) : obj.secondValue = obj.secondValue; // if 0 is selected first
+            currentOperation.textContent = obj.secondValue;
         }
 
         function selectOperator(e) {
