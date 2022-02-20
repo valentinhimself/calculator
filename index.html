@@ -122,7 +122,7 @@
                     divide();
                     break;
             }
-            displayResult();
+            equal();
         }
     
         function add() {
@@ -141,7 +141,7 @@
             obj.result =  obj.firstValue / obj.secondValue;
         }
 
-        function displayResult () {
+        function equal () {
             previousOperation.textContent += `${obj.secondValue}`;
             previousOperation.textContent += `=`;
             currentOperation.textContent = obj['result'];
