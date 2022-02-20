@@ -51,84 +51,96 @@
         const point = document.querySelector ('.point');
         const equality = document.querySelector ('.equality');
         let currentOperation = document.querySelector("#current-operation");
-        let lastOperation = document.querySelector("#last-operation");
-        const zero = document.createElement('span');
-        let currentValue = document.createElement('span');
-        let lastValue = document.createElement ('span');
+        let previousOperation = document.querySelector("#last-operation");
 
-        //zero.textContent = 0;
-        //currentOperation.appendChild(zero);
+        let flag = false;
+
         currentOperation.textContent = 0;
-
-        numbers.forEach(number => number.addEventListener('click', setCurrentValue));
-        operators.forEach(operator => operator.addEventListener('click', operate))
+        numbers.forEach(number => number.addEventListener('click', setNumber));
+        operators.forEach(operator => operator.addEventListener('click', selectOperator));
+        equality.addEventListener('click', operate)
 
         let obj = {
-        currentValue: 0,
-        lastValue: 0,
-        operator: '',
-        }
+            firstValue: 0,
+            secondValue: 0,
+            operator: '',
+            result: 0,
+        };
 
-        function setCurrentValue (e) {
-
-            if (obj.currentValue == 0) {
-                obj.currentValue = e.target.value;
-                //currentOperation.textContent = obj.currentValue
-                //currentValue.textContent = obj.currentValue;
-                //currentOperation.replaceChild(currentValue, zero)
+        function setNumber (e) {
+            if (flag===false) {
+                    if (obj.firstValue == 0) {
+                        obj.firstValue = e.target.value;
+                }
+                    else {
+                        obj.firstValue += e.target.value;
+                    }
+                    currentOperation.textContent = obj.firstValue;
             }
             else {
-                obj.currentValue += e.target.value;
-                //currentOperation.textContent = obj.currentValue
-                //urrentValue.textContent = obj.currentValue;
+                    if (obj.secondValue == 0) {
+                        obj.secondValue = e.target.value;
+                    }
+                    else {
+                        obj.secondValue += e.target.value;
+                        currentOperation.textContent = obj.secondValue;
+                    }
+                    currentOperation.textContent = obj.secondValue;
+                }
             }
-            currentOperation.textContent = obj.currentValue
-        }
 
-        function moveValues() {
-            obj.lastValue = obj.currentValue;
-            lastOperation.textContent = obj.lastValue;
-            obj.currentValue = 0;
 
+        function selectOperator(e) {
+            obj.operator = e.target.value;
+            previousOperation.textContent += obj.firstValue;
+            previousOperation.textContent += obj.operator;
+            flag = true;
         }
-        function operate(e) {
-            switch (e.target.value) {
-                case '/':
-                    divide ();
-                    break    
-                case '*':
-                    multiply ();
-                    break  
-                case '+':
-                    add() ; 
-                    break  
-                case '-':
-                    subtract(); 
-                    break          
+    
+        function operate() {
+            switch (obj.operator) {
+                case "+":
+                    add();
+                    break;
+                case "-":
+                    subtract();
+                    break
+                case "*":
+                    multiply();
+                    break;
+                case "/":
+                    divide();
+                    break;
             }
-            moveValues()
+            displayResult();
+        }
+    
+        function add() {
+            obj.result = parseInt (obj.firstValue) + parseInt(obj.secondValue);
         }
 
+        function subtract() {
+            obj.result = obj.firstValue - obj.secondValue;
+        }
 
-   function add() {
-       console.log(currentValue + lastValue)
-       return currentValue + lastValue;
-   }
+        function multiply() {
+            obj.result =  obj.firstValue * obj.secondValue;
+        }
 
-   function subtract() {
-       return lastValue - currentValue;
-   }
+        function divide() {
+            obj.result =  obj.firstValue / obj.secondValue;
+        }
 
-   function multiply() {
-       return lastValue * currentValue;
-   }
+        function displayResult () {
+            previousOperation.textContent += `${obj.secondValue}`;
+            previousOperation.textContent += `=`;
+            currentOperation.textContent = obj['result'];
+            keepCalculating ();
+        }
 
-   function divide() {
-       return lastValue / currentValue;
-   }
-
-
-
+        function keepCalculating () {
+            obj ['firstValue'] = obj['result'];
+        }
 //}
 </script>
 </html>
