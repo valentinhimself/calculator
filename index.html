@@ -79,7 +79,7 @@
             }
             else {
                 obj.secondValue === 0 ? obj.secondValue = e.target.value : obj.secondValue += e.target.value;
-                obj.secondValue[0] == 0 && obj.secondValue.length > 1 ? obj.secondValue = obj.firstValue.slice(1) : obj.secondValue = obj.secondValue; // if 0 is selected first
+                obj.secondValue[0] == 0 && obj.secondValue.length > 1 ? obj.secondValue = obj.secondValue.slice(1) : obj.secondValue = obj.secondValue; // if 0 is selected first
                 currentOperation.textContent = obj.secondValue;
             }
         }
