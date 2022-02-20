@@ -53,7 +53,7 @@
         let currentOperation = document.querySelector("#current-operation");
         let previousOperation = document.querySelector("#last-operation");
 
-        let flag = false;
+        //let flag = false;
 
         currentOperation.textContent = 0;
         numbers.forEach(number => number.addEventListener('click', setNumber));
@@ -65,36 +65,41 @@
             secondValue: 0,
             operator: '',
             result: 0,
+            switchNumberFlag: false,
+            secondValueCounter: 0,
+            equalityCounter: 0,
+            operatorCounter: 0,
         };
 
-        function setNumber (e) {
-            if (flag===false) {
-                    if (obj.firstValue == 0) {
-                        obj.firstValue = e.target.value;
-                }
-                    else {
-                        obj.firstValue += e.target.value;
-                    }
-                    currentOperation.textContent = obj.firstValue;
+        function setNumber(e) {
+            if (obj.switchNumberFlag===false) {
+                obj.firstValue === 0 ? obj.firstValue = e.target.value : obj.firstValue += e.target.value;
+                obj.firstValue[0] == 0 && obj.firstValue.length > 1 ? obj.firstValue = obj.firstValue.slice(1) : obj.firstValue = obj.firstValue; // if 0 is selected first
+                currentOperation.textContent = obj.firstValue;
             }
             else {
-                    if (obj.secondValue == 0) {
-                        obj.secondValue = e.target.value;
-                    }
-                    else {
-                        obj.secondValue += e.target.value;
-                        currentOperation.textContent = obj.secondValue;
-                    }
-                    currentOperation.textContent = obj.secondValue;
-                }
+                obj.secondValue === 0 ? obj.secondValue = e.target.value : obj.secondValue += e.target.value;
+                obj.secondValue[0] == 0 && obj.secondValue.length > 1 ? obj.secondValue = obj.firstValue.slice(1) : obj.secondValue = obj.secondValue; // if 0 is selected first
+                currentOperation.textContent = obj.secondValue;
             }
-
+        }
 
         function selectOperator(e) {
             obj.operator = e.target.value;
             previousOperation.textContent += obj.firstValue;
             previousOperation.textContent += obj.operator;
-            flag = true;
+            obj.switchNumberFlag = true;
+            ++obj.operatorCounter;
+            if (obj.operatorCounter > 1){
+                operate ();
+            };
+
+
+/*            if (previousOperation.textContent.includes('=')) {
+                previousOperation.textContent = obj.firstValue;
+                previousOperation.textContent += obj.operator;
+            }
+            */
         }
     
         function operate() {
@@ -135,12 +140,32 @@
             previousOperation.textContent += `${obj.secondValue}`;
             previousOperation.textContent += `=`;
             currentOperation.textContent = obj['result'];
-            keepCalculating ();
+            //obj.equalityCounter++;
+            if (obj.equalityCounter>1) {
+                keepCalculating ();
+            }
+            
         }
 
+
         function keepCalculating () {
-            obj ['firstValue'] = obj['result'];
+            obj ['firstValue'] = obj['result']; 
+
+            /*
+            previousOperation.textContent = obj ['firstValue'];
+            previousOperation.textContent += obj ['operator'];
+            previousOperation.textContent += obj ['secondValue'];
+            obj.equalityCounter = 1;
+            */
+
         }
 //}
 </script>
 </html>
+// 1. assign firstValue 
+// 2. assign operator
+// 3. assign secondValue
+// 4. on equality or second perform operation;
+// 1. show result. 
+// 2. if equality is pressed again, then assign result to firstValue
+// 3. repeat calculation 
