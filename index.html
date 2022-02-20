@@ -72,6 +72,7 @@
         };
 
         function setNumber(e) {
+        // functions sets the first and second number. The second part of the code executes after operator is selected"
             if (obj.switchNumberFlag===false) {
                 obj.firstValue === 0 ? obj.firstValue = e.target.value : obj.firstValue += e.target.value;
                 obj.firstValue[0] == 0 && obj.firstValue.length > 1 ? obj.firstValue = obj.firstValue.slice(1) : obj.firstValue = obj.firstValue; // if 0 is selected first
