@@ -90,6 +90,8 @@
         function selectOperator(e) {
             obj.operator = e.target.value; //select operator
             obj.switchNumberFlag = true; // start setting second number 
+
+            //to avoid displaying extra number and extra operator when hitting operator 2nd time
             if (obj.operatorCounter < 1) {
                 previousOperation.textContent += obj.firstValue;
                 previousOperation.textContent += obj.operator;
