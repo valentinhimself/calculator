@@ -86,13 +86,17 @@
         }
 
         function selectOperator(e) {
-            obj.operator = e.target.value;
-            previousOperation.textContent += obj.firstValue;
-            previousOperation.textContent += obj.operator;
-            obj.switchNumberFlag = true;
+            obj.operator = e.target.value; //select operator
+            obj.switchNumberFlag = true; // start setting second number 
+            if (obj.operatorCounter < 1) {
+                previousOperation.textContent += obj.firstValue;
+                previousOperation.textContent += obj.operator;
+            }
+  
             ++obj.operatorCounter;
             if (obj.operatorCounter > 1){
-                operate ();
+                operate (); // invoke function if two values are entered and another operation is requested skipping equality.
+                obj.operatorCounter--;
             };
 
 
