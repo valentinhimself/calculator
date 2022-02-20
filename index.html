@@ -62,14 +62,12 @@
 
         let obj = {
             firstValue: 0,
-            secondValue: 0,
+            secondValue: null,
             operator: '',
-            result: 0,
+            result: null,
             switchNumberFlag: false,
-            secondValueCounter: 0,
             equalityCounter: 0,
-            operatorCounter: 0,
-        };
+         };
 
         function setNumbers(e) {
         // switch functions to set First, then second number.
@@ -82,33 +80,31 @@
         }
 
         function setSecondNumber (e) {
-            obj.secondValue === 0 ? obj.secondValue = e.target.value : obj.secondValue += e.target.value;
+            obj.secondValue === null ? obj.secondValue = e.target.value : obj.secondValue += e.target.value;
             obj.secondValue[0] == 0 && obj.secondValue.length > 1 ? obj.secondValue = obj.secondValue.slice(1) : obj.secondValue = obj.secondValue; // if 0 is selected first
             currentOperation.textContent = obj.secondValue;
+            switchNumFlag(); // back to false after the number is selected;
         }
 
         function selectOperator(e) {
             obj.operator = e.target.value; //select operator
-            obj.switchNumberFlag = true; // start setting second number 
-
-            //to avoid displaying extra number and extra operator when hitting operator 2nd time
-            if (obj.operatorCounter < 1) {
+            //obj.switchNumberFlag = true; // start setting second number 
+            switchNumFlag(); // set to true to avoid displaying extra number and extra operator when hitting operator 2nd time
+            if (obj.switchNumberFlag === true) {
                 previousOperation.textContent += obj.firstValue;
                 previousOperation.textContent += obj.operator;
             }
-  
-            ++obj.operatorCounter;
-            if (obj.operatorCounter > 1){
-                operate (); // invoke function if two values are entered and another operation is requested skipping equality.
-                obj.operatorCounter--;
-            };
+            // allow changing the operator 
+            previousOperation.textContent = previousOperation.textContent[previousOperation.textContent.length-2] + obj.operator; 
 
+        }
+//            if (obj.operatorCounter > 1){
+//               operate (); // invoke function if two values are entered and another operation is requested skipping equality.
+//                obj.operatorCounter--;
+//            };
 
-/*            if (previousOperation.textContent.includes('=')) {
-                previousOperation.textContent = obj.firstValue;
-                previousOperation.textContent += obj.operator;
-            }
-            */
+        function switchNumFlag() {
+            obj.switchNumberFlag === false ? obj.switchNumberFlag = true : obj.switchNumberFlag = false;
         }
     
         function operate() {
