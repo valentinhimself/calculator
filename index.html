@@ -58,7 +58,6 @@
         let firstNumber = '';
         let secondNumber = '';
         let operator = '';
-        let equalityFlag = false;
         let result = 0;
         let temp = 0;
         mainDisplay.innerText = 0;
@@ -98,6 +97,9 @@
         }
 
         function selectOperator (e) {
+            if (topDisplay.innerText.includes("=")) {
+                resetSecondNumber();
+            }
             firstNumber = mainDisplay.innerText;
             operator = e.target.value;
             topDisplay.innerText = mainDisplay.innerText + e.target.value;
@@ -160,6 +162,9 @@
             }
         }
 
+        function resetSecondNumber() {
+            secondNumber = '';
+        }
     
 
 /*
