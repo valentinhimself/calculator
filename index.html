@@ -103,7 +103,7 @@
         }
         function setFirstNumber(e) {
             if (mainDisplay.innerText.length <= 9) {
-                mainDisplay.innerText == 0 ? mainDisplay.innerText = e.target.value : mainDisplay.innerText += e.target.value;
+                mainDisplay.innerText == '0' ? mainDisplay.innerText = e.target.value : mainDisplay.innerText += e.target.value;
             }
         }
 
@@ -166,7 +166,6 @@
                          break;
                      case "/":
                          result =  firstNumber / secondNumber;
-                         
                          break;
                 }
                 result = parseFloat(result).toFixed(8);
