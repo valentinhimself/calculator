@@ -46,6 +46,7 @@
 //initiateCalculator ();
 
  //   function initiateCalculator () {
+        const clear = document.querySelector ('#clear')
         const numbers = document.querySelectorAll ('.num');
         const operators = document.querySelectorAll ('.operator');
         const point = document.querySelector ('.point');
@@ -60,9 +61,21 @@
         let result = 0;
         mainDisplay.innerText = 0;
 
+        clear.addEventListener ('click', clearAll)
         numbers.forEach(number => number.addEventListener('click', setNumbers));
         operators.forEach(operator => operator.addEventListener('click', selectOperator));
         equality.addEventListener('click', operate)
+
+        function clearAll () {
+
+            firstNumber = '';
+            secondNumber = '';
+            operator = '';
+            equalityFlag = false;
+            result = 0;
+            topDisplay.innerText = '';
+            mainDisplay.innerText = 0;
+        }
 
         function setNumbers (e) {
             !firstNumber ? setFirstNumber(e) : setSecondNumber(e);
@@ -100,8 +113,11 @@
         }
 
         function equalDisplay() {
-            topDisplay.innerText += `${secondNumber}=`;
-            mainDisplay.innerText = result;     
+            if (equalityFlag===false) {
+                topDisplay.innerText += `${secondNumber}=`;
+                mainDisplay.innerText = result;    
+                equalityFlag = true;
+            }
         }
     
 
