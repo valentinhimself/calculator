@@ -117,7 +117,10 @@
                 operator = e.target.value;
                 topDisplay.innerText = mainDisplay.innerText + e.target.value;
             }
-            else {operate()}
+            else {
+                operate(); //performs calculation when an operator is selected a second time
+                selectOperator (e); // reassigns secondNumber that is otherwise is reset on equality
+                };
         }
 
         function setSecondNumber(e) {
