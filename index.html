@@ -111,9 +111,13 @@
                 resetSecondNumber();
             }
             convertInvalidNumbers ();
-            firstNumber = mainDisplay.innerText;
-            operator = e.target.value;
-            topDisplay.innerText = mainDisplay.innerText + e.target.value;
+
+            if (secondNumber == '') {
+                firstNumber = mainDisplay.innerText;
+                operator = e.target.value;
+                topDisplay.innerText = mainDisplay.innerText + e.target.value;
+            }
+            else {operate()}
         }
 
         function setSecondNumber(e) {
