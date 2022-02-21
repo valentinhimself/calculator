@@ -47,6 +47,7 @@
 
  //   function initiateCalculator () {
         const clear = document.querySelector ('#clear')
+        const deletion = document.querySelector ('#delete')
         const numbers = document.querySelectorAll ('.num');
         const operators = document.querySelectorAll ('.operator');
         const point = document.querySelector ('.point');
@@ -65,6 +66,19 @@
         numbers.forEach(number => number.addEventListener('click', setNumbers));
         operators.forEach(operator => operator.addEventListener('click', selectOperator));
         equality.addEventListener('click', operate)
+        deletion.addEventListener ('click', deleteNumber)
+
+        function deleteNumber () {
+            mainDisplay.innerText.length == 1 ? mainDisplay.innerText = 0 
+            : mainDisplay.innerText = mainDisplay.innerText.slice(0,-1);
+            updateOnDeletion ();
+        }
+
+        function updateOnDeletion () {
+            if (topDisplay.innerText.includes(`${operator}`)) {
+                secondNumber.length <= 1 ? secondNumber = '' : secondNumber = secondNumber.slice(0,-1)
+            }
+        }
 
         function clearAll () {
 
@@ -95,21 +109,23 @@
             mainDisplay.innerText = secondNumber;
         }
         function operate() {
-            switch (operator) {
-                case "+":
-                    result = parseInt (firstNumber) + parseInt(secondNumber);
-                    break;
-                case "-":
-                    result = firstNumber - secondNumber;
-                    break
-                case "*":
-                    result =  firstNumber * secondNumber;
-                    break;
-                case "/":
-                    result =  firstNumber / secondNumber;
-                    break;
-            }
+            if (secondNumber != "") {
+                switch (operator) {
+                     case "+":
+                         result = parseInt (firstNumber) + parseInt(secondNumber);
+                         break;
+                     case "-":
+                         result = firstNumber - secondNumber;
+                         break
+                     case "*":
+                         result =  firstNumber * secondNumber;
+                         break;
+                     case "/":
+                         result =  firstNumber / secondNumber;
+                         break;
+                }
             equalDisplay();
+            }
         }
 
         function equalDisplay() {
