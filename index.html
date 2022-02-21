@@ -33,7 +33,7 @@
                 <button class="num" value="2">2</button>
                 <button class="num" value="3">3</button>
                 <button class="operator" value="-">-</button>
-                <button class="point" value=".">.</button>
+                <button class="num" value=".">.</button>
                 <button class="num" value="0">0</button>
                 <button class="equality" value="=">=</button>
                 <button class="operator" value="+">+</button>
@@ -50,7 +50,7 @@
         const deletion = document.querySelector ('#delete')
         const numbers = document.querySelectorAll ('.num');
         const operators = document.querySelectorAll ('.operator');
-        const point = document.querySelector ('.point');
+        //const point = document.querySelector ('.point');
         const equality = document.querySelector ('.equality');
         let mainDisplay = document.querySelector("#current-operation");
         let topDisplay = document.querySelector("#last-operation");
@@ -112,7 +112,7 @@
             if (secondNumber != "") {
                 switch (operator) {
                      case "+":
-                         result = parseInt (firstNumber) + parseInt(secondNumber);
+                         result = parseFloat (firstNumber) + parseFloat(secondNumber);
                          break;
                      case "-":
                          result = firstNumber - secondNumber;
@@ -132,7 +132,7 @@
             if (equalityFlag===false) {
                 topDisplay.innerText += `${secondNumber}=`;
                 mainDisplay.innerText = result;    
-                equalityFlag = true;
+                equalityFlag = true; // DO I NEED IT?
             }
         }
     
