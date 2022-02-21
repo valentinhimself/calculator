@@ -50,26 +50,69 @@
         const operators = document.querySelectorAll ('.operator');
         const point = document.querySelector ('.point');
         const equality = document.querySelector ('.equality');
-        let currentOperation = document.querySelector("#current-operation");
-        let previousOperation = document.querySelector("#last-operation");
+        let mainDisplay = document.querySelector("#current-operation");
+        let topDisplay = document.querySelector("#last-operation");
 
-        //let flag = false;
+        let firstNumber = '';
+        let secondNumber = '';
+        let operator = '';
+        let equalityFlag = false;
+        let result = 0;
+        mainDisplay.innerText = 0;
 
-        currentOperation.textContent = 0;
         numbers.forEach(number => number.addEventListener('click', setNumbers));
         operators.forEach(operator => operator.addEventListener('click', selectOperator));
         equality.addEventListener('click', operate)
 
+        function setNumbers (e) {
+            !firstNumber ? setFirstNumber(e) : setSecondNumber(e);
+        }
+        function setFirstNumber(e) {
+            mainDisplay.innerText == 0 ? mainDisplay.innerText = e.target.value : mainDisplay.innerText += e.target.value;
+        }
+
+        function selectOperator (e) {
+            firstNumber = mainDisplay.innerText;
+            operator = e.target.value;
+            topDisplay.innerText = mainDisplay.innerText + e.target.value;
+        }
+
+        function setSecondNumber(e) {
+            !secondNumber ? secondNumber = e.target.value : secondNumber += e.target.value;
+            mainDisplay.innerText = secondNumber;
+        }
+        function operate() {
+            switch (operator) {
+                case "+":
+                    result = parseInt (firstNumber) + parseInt(secondNumber);
+                    break;
+                case "-":
+                    result = firstNumber - secondNumber;
+                    break
+                case "*":
+                    result =  firstNumber * secondNumber;
+                    break;
+                case "/":
+                    result =  firstNumber / secondNumber;
+                    break;
+            }
+            equalDisplay();
+        }
+
+        function equalDisplay() {
+            topDisplay.innerText += `${secondNumber}=`;
+            mainDisplay.innerText = result;     
+        }
+    
+
+/*
         let obj = {
             firstValue: 0,
             secondValue: null,
             operator: '',
             result: null,
             switchNumberFlag: false,
-            secondNumFlag: true,
-            equalityCounter: 0,
-            operatorCounter: 0,
- 
+            equalityFlag: false,
         };
 
         function setNumbers(e) {
@@ -86,21 +129,18 @@
             obj.secondValue === null ? obj.secondValue = e.target.value : obj.secondValue += e.target.value;
             obj.secondValue[0] == 0 && obj.secondValue.length > 1 ? obj.secondValue = obj.secondValue.slice(1) : obj.secondValue = obj.secondValue; // if 0 is selected first
             currentOperation.textContent = obj.secondValue;
-            changeSecondNumFlag(); // back to true after the number is selected;
         }
 
         function selectOperator(e) {
             obj.operator = e.target.value; //select operator
-            obj.switchNumberFlag = true; // start setting second number 
-
-            //to avoid displaying extra number and extra operator when hitting operator 2nd time
+            changeSecondNumFlag(); // set to true to avoid displaying extra number and extra operator when hitting operator 2nd time
             if (obj.switchNumberFlag === true) {
                 previousOperation.textContent += obj.firstValue;
                 previousOperation.textContent += obj.operator;
             }
             // allow changing the operator 
-            previousOperation.textContent = currentOperation.textContent + obj.operator; 
-            changeSecondNumFlag(); // set to false
+            //previousOperation.textContent = currentOperation.textContent + obj.operator; 
+
         }
 //            if (obj.operatorCounter > 1){
 //               operate (); // invoke function if two values are entered and another operation is requested skipping equality.
@@ -108,9 +148,12 @@
 //            };
 
         function changeSecondNumFlag() {
-            obj.secondNumFlag === false ? obj.secondNumFlag = true : obj.secondNumFlag = false;
+            obj.switchNumberFlag === false ? obj.switchNumberFlag = true : obj.switchNumberFlag = false;
         }
     
+        function changeEqualityFlag() {
+            obj.equalityFlag === false ? obj.equalityFlag = true : obj.equalityFlag = false;
+        }
         function operate() {
             switch (obj.operator) {
                 case "+":
@@ -126,7 +169,7 @@
                     divide();
                     break;
             }
-            displayResult();
+            equal();
         }
     
         function add() {
@@ -145,19 +188,16 @@
             obj.result =  obj.firstValue / obj.secondValue;
         }
 
-        function displayResult () {
+        function equal () {
             previousOperation.textContent += `${obj.secondValue}`;
             previousOperation.textContent += `=`;
             currentOperation.textContent = obj['result'];
-            //obj.equalityCounter++;
-            if (obj.equalityCounter>1) {
-                keepCalculating ();
-            }
-            
+            changeValues ();   
+            changeEqualityFlag ();         
         }
 
 
-        function keepCalculating () {
+        function changeValues () {
             obj ['firstValue'] = obj['result']; 
 
             /*
@@ -167,14 +207,9 @@
             obj.equalityCounter = 1;
             */
 
-        }
-//}
+        
+
+
+
 </script>
 </html>
-// 1. assign firstValue 
-// 2. assign operator
-// 3. assign secondValue
-// 4. on equality or second perform operation;
-// 1. show result. 
-// 2. if equality is pressed again, then assign result to firstValue
-// 3. repeat calculation 
