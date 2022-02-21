@@ -90,6 +90,9 @@
         }
 
         function setNumbers (e) {
+            if (topDisplay.innerText.includes("=")) {
+                clearAll (); 
+            }
             !firstNumber ? setFirstNumber(e) : setSecondNumber(e);
         }
         function setFirstNumber(e) {
