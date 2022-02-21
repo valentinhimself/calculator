@@ -90,13 +90,13 @@
         }
 
         function setNumbers (e) {
-            if (topDisplay.innerText.includes("=")) {
-                clearAll (); 
-            }
+            fixVariables () // for 2nd and subsequent operations;
             !firstNumber ? setFirstNumber(e) : setSecondNumber(e);
         }
         function setFirstNumber(e) {
-            mainDisplay.innerText == 0 ? mainDisplay.innerText = e.target.value : mainDisplay.innerText += e.target.value;
+            if (mainDisplay.innerText.length <= 9) {
+                mainDisplay.innerText == 0 ? mainDisplay.innerText = e.target.value : mainDisplay.innerText += e.target.value;
+            }
         }
 
         function selectOperator (e) {
@@ -109,8 +109,10 @@
         }
 
         function setSecondNumber(e) {
-            !secondNumber ? secondNumber = e.target.value : secondNumber += e.target.value;
-            mainDisplay.innerText = secondNumber;
+            if (secondNumber.length <= 9) {
+                !secondNumber ? secondNumber = e.target.value : secondNumber += e.target.value;
+                mainDisplay.innerText = secondNumber;
+            }
         }
         function operate() {
             if (secondNumber != "") {
@@ -168,7 +170,14 @@
         function resetSecondNumber() {
             secondNumber = '';
         }
-    
+
+        function fixVariables () {
+            if (topDisplay.innerText.includes("=")) {
+                clearAll (); 
+            }
+        }
+
+   
 
 /*
         let obj = {
