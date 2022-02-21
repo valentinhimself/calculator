@@ -60,6 +60,7 @@
         let operator = '';
         let equalityFlag = false;
         let result = 0;
+        let temp = 0;
         mainDisplay.innerText = 0;
 
         clear.addEventListener ('click', clearAll)
@@ -81,7 +82,6 @@
         }
 
         function clearAll () {
-
             firstNumber = '';
             secondNumber = '';
             operator = '';
@@ -128,12 +128,42 @@
             }
         }
 
+        function operateOnSecondEquality() {
+            if (secondNumber != "") {
+                switch (operator) {
+                     case "+":
+                         result = parseFloat (firstNumber) + parseFloat(secondNumber);
+                         break;
+                     case "-":
+                         result = firstNumber - secondNumber;
+                         break
+                     case "*":
+                         result =  firstNumber * secondNumber;
+                         break;
+                     case "/":
+                         result =  firstNumber / secondNumber;
+                         break;
+                }
+            }
+        }
+
         function equalDisplay() {
             if (equalityFlag===false) {
                 topDisplay.innerText += `${secondNumber}=`;
                 mainDisplay.innerText = result;    
-                equalityFlag = true; // DO I NEED IT?
+                toggleEqualityFlag ();
             }
+            else {
+                temp = result;
+                firstNumber = temp;
+                topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`;
+                operateOnSecondEquality();
+                mainDisplay.innerText = result; 
+            }
+        }
+
+        function toggleEqualityFlag () {
+            equalityFlag === false ? equalityFlag = true : equalityFlag = false;
         }
     
 
