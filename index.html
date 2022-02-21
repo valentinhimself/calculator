@@ -146,8 +146,7 @@
                          result =  firstNumber / secondNumber;
                          break;
                 }
-            result = parseFloat(result).toFixed(8)
-            isInt(); // to remove trailing zeros
+            result = parseFloat(parseFloat(result).toFixed(8)); // first parseFloat to remove trailing zeroes
             equalDisplay();
             }
         }
@@ -168,9 +167,8 @@
                          result =  firstNumber / secondNumber;
                          break;
                 }
-                result = parseFloat(result).toFixed(8);
+                result = parseFloat(parseFloat(result).toFixed(8)); // first parseFloat to remove trailing zeroes
                 convertToZero();
-                isInt(); // to remove trailing zeros
             }
         }
 
@@ -205,10 +203,6 @@
         function convertInvalidNumbers () {
             let validNumber = (mainDisplay.innerText == '.') ? false : true;
             if (!validNumber) {mainDisplay.innerText = 0;}
-        }
-
-        function isInt() {
-            result%parseInt(result) == 0 ? result = parseInt(result) : result = result;
         }
 
         function convertToZero() {
