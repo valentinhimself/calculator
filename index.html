@@ -168,7 +168,7 @@
                          break;
                 }
                 result = parseFloat(parseFloat(result).toFixed(8)); // first parseFloat to remove trailing zeroes
-                convertToZero();
+                clearAtEpsilon();
             }
         }
 
@@ -205,8 +205,9 @@
             if (!validNumber) {mainDisplay.innerText = 0;}
         }
 
-        function convertToZero() {
-            if (mainDisplay.innerText <= 0.00000001) {
+        function clearAtEpsilon() {
+            let epsilon = 0.00000001;
+            if (mainDisplay.innerText <= epsilon) {
                 clearAll ();
                 }
         }
