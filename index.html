@@ -85,7 +85,6 @@
             firstNumber = '';
             secondNumber = '';
             operator = '';
-            equalityFlag = false;
             result = 0;
             topDisplay.innerText = '';
             mainDisplay.innerText = 0;
@@ -148,10 +147,9 @@
         }
 
         function equalDisplay() {
-            if (equalityFlag===false) {
+            if (!topDisplay.innerText.includes("=")) {
                 topDisplay.innerText += `${secondNumber}=`;
                 mainDisplay.innerText = result;    
-                toggleEqualityFlag ();
             }
             else {
                 temp = result;
@@ -162,9 +160,6 @@
             }
         }
 
-        function toggleEqualityFlag () {
-            equalityFlag === false ? equalityFlag = true : equalityFlag = false;
-        }
     
 
 /*
