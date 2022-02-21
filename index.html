@@ -62,6 +62,7 @@
         let temp = 0;
         mainDisplay.innerText = 0;
 
+
         clear.addEventListener ('click', clearAll)
         numbers.forEach(number => number.addEventListener('click', setNumbers));
         operators.forEach(operator => operator.addEventListener('click', selectOperator));
@@ -91,7 +92,13 @@
 
         function setNumbers (e) {
             fixVariables () // for 2nd and subsequent operations;
-            !firstNumber ? setFirstNumber(e) : setSecondNumber(e);
+            if (allowOnePoint(e)) {
+                //do nothing
+            }
+            else {
+                !firstNumber ? setFirstNumber(e) : setSecondNumber(e);
+            }
+
         }
         function setFirstNumber(e) {
             if (mainDisplay.innerText.length <= 9) {
@@ -103,6 +110,7 @@
             if (topDisplay.innerText.includes("=")) {
                 resetSecondNumber();
             }
+            convertInvalidNumbers ();
             firstNumber = mainDisplay.innerText;
             operator = e.target.value;
             topDisplay.innerText = mainDisplay.innerText + e.target.value;
@@ -177,8 +185,14 @@
             }
         }
 
-   
+        function allowOnePoint (e) {
+            return mainDisplay.innerText.includes('.') && e.target.value == '.'
+        }
 
+        function convertInvalidNumbers () {
+            let validNumber = (mainDisplay.innerText == '.') ? false : true;
+            if (!validNumber) {mainDisplay.innerText = 0}
+        }
 /*
         let obj = {
             firstValue: 0,
