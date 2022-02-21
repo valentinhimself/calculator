@@ -43,8 +43,6 @@
 </body>
 
 <script>
-
-    //TO DO: round the answer to several decimals 
     //TO DO: add keyboard functionality 
     
 //initiateCalculator ();
@@ -54,7 +52,6 @@
         const deletion = document.querySelector ('#delete')
         const numbers = document.querySelectorAll ('.num');
         const operators = document.querySelectorAll ('.operator');
-        //const point = document.querySelector ('.point');
         const equality = document.querySelector ('.equality');
         let mainDisplay = document.querySelector("#current-operation");
         let topDisplay = document.querySelector("#last-operation");
@@ -149,6 +146,8 @@
                          result =  firstNumber / secondNumber;
                          break;
                 }
+            result = parseFloat(result).toFixed(8)
+            isInt(); // to remove trailing zeros
             equalDisplay();
             }
         }
@@ -167,8 +166,12 @@
                          break;
                      case "/":
                          result =  firstNumber / secondNumber;
+                         
                          break;
                 }
+                result = parseFloat(result).toFixed(8);
+                convertToZero();
+                isInt(); // to remove trailing zeros
             }
         }
 
@@ -202,7 +205,17 @@
 
         function convertInvalidNumbers () {
             let validNumber = (mainDisplay.innerText == '.') ? false : true;
-            if (!validNumber) {mainDisplay.innerText = 0}
+            if (!validNumber) {mainDisplay.innerText = 0;}
+        }
+
+        function isInt() {
+            result%parseInt(result) == 0 ? result = parseInt(result) : result = result;
+        }
+
+        function convertToZero() {
+            if (mainDisplay.innerText <= 0.00000001) {
+                clearAll ();
+                }
         }
 /*
         let obj = {
