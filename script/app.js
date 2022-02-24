@@ -31,7 +31,38 @@ function operate (operator, num1, num2) {
     }
 }
 
-const numbers = document.querySelectorAll ('button');
-numbers.forEach(number => number.addEventListener('click', function () {
-    console.log(this.value);
-}));
+const buttons = document.querySelectorAll ('button');
+buttons.forEach(button => button.addEventListener('click', pressKey));
+display = document.querySelector('#current-operation');
+let operator = '';
+let currentNumber = '';
+
+function pressKey () {
+    passValue(this.value);
+}
+
+function passValue(input) {
+    this.value = input;
+    if (!operator) { addNumber (input) };
+
+    function addNumber (input) {
+        let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
+        transformDecimal(input);
+        
+        if (currentNumber.includes('.') && input === '.') {
+            //do nothing
+        }
+        else if (numbers.includes(input) && !operator) {currentNumber += input;} 
+        display.innerText = currentNumber;
+    }
+
+    function transformDecimal(input) {
+        if (input === '.' && display.innerText === '' ) {
+            currentNumber = '0.';
+            display.innerText = currentNumber;
+        }
+    }
+};
+
+
+
