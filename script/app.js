@@ -31,28 +31,45 @@ function operate (operator, num1, num2) {
     }
 }
 
-const buttons = document.querySelectorAll ('button');
-buttons.forEach(button => button.addEventListener('click', pressKey));
-display = document.querySelector('#current-operation');
+const numbers = document.querySelectorAll ('.num');
+const operators = document.querySelectorAll ('.operator');
+const display = document.querySelector('#current-operation');
+const topDisplay = document.querySelector ('#last-operation');
+numbers.forEach(number => number.addEventListener('click', pressKey));
+operators.forEach(operator => operator.addEventListener('click', pressKey))
+
 let operator = '';
 let currentNumber = '';
+let firstNumber = '';
+let secondNumber = '';
 
 function pressKey () {
+    //let numbers = ['1','2','3','4','5','6','7','8','9','0','.'];
+    if (this.value)
     passValue(this.value);
 }
 
 function passValue(input) {
     this.value = input;
+    addOperator (input);
     if (!operator) { addNumber (input) };
 
     function addNumber (input) {
-        let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
         transformDecimal(input);
-        if (currentNumber.includes('.') && input === '.') {
-            //do nothing
-        }
-        else if (numbers.includes(input) && !operator) {currentNumber += input;} 
+        if (currentNumber.includes('.') && input === '.') {//do nothing
+    }
+        else if (!operator) {currentNumber += input;} 
         display.innerText = currentNumber;
+    }
+
+    function addOperator (input) {
+        const operators = ['/', '*', '+', '-'];
+        firstNumber = currentNumber;
+        //currentNumber = '';
+        if (operators.includes(input)) {
+            operator = input;
+            topDisplay.innerText = firstNumber + operator;
+        }
     }
 
     function transformDecimal(input) {
@@ -62,6 +79,3 @@ function passValue(input) {
         }
     }
 };
-
-
-
