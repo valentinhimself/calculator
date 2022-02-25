@@ -31,22 +31,33 @@ function operate (operator, num1, num2) {
     }
 }
 
+
 const numbers = document.querySelectorAll ('.num');
 const operators = document.querySelectorAll ('.operator');
 const display = document.querySelector('#current-operation');
 const topDisplay = document.querySelector ('#last-operation');
 numbers.forEach(number => number.addEventListener('click', pressKey));
-operators.forEach(operator => operator.addEventListener('click', pressKey))
+operators.forEach(operator => operator.addEventListener('click', pressKey));
+window.addEventListener('keydown', pressKey); 
 
 let operator = '';
 let currentNumber = '';
 let firstNumber = '';
 let secondNumber = '';
+let allowedChars = ['1','2','3','4','5','6','7','8','9','0','.','=','+','-','*','/'];
 
-function pressKey () {
-    //let numbers = ['1','2','3','4','5','6','7','8','9','0','.'];
-    if (this.value)
-    passValue(this.value);
+function isValidKey (e) {
+    return allowedChars.includes(e.key)
+}
+
+function pressKey (e) {
+    if (e.key === undefined) {
+        passValue(this.value);
+    }
+    else {
+        this.value = e.key;
+        if (isValidKey (e)) passValue (this.value); 
+    }
 }
 
 function passValue(input) {
