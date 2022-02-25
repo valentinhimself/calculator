@@ -31,7 +31,6 @@ function operate (operator, num1, num2) {
     }
 }
 
-
 const numbers = document.querySelectorAll ('.num');
 const operators = document.querySelectorAll ('.operator');
 const display = document.querySelector('#current-operation');
@@ -41,46 +40,70 @@ operators.forEach(operator => operator.addEventListener('click', pressKey));
 window.addEventListener('keydown', pressKey); 
 
 let operator = '';
-let currentNumber = '';
+let currentNumber = ''; // used as temporary variable
 let firstNumber = '';
 let secondNumber = '';
 let allowedChars = ['1','2','3','4','5','6','7','8','9','0','.','=','+','-','*','/'];
 
 function isValidKey (e) {
-    return allowedChars.includes(e.key)
+    /*the function checks if a key stroke is allowed within the calculator
+    this is to avoid inappropriate inputs for this app
+    returns true/false*/
+    return allowedChars.includes(e.key);
 }
 
 function pressKey (e) {
+    /*the functions reads the Number at click/keystroke
+    if it is a mouseclick, then use value of the buttons pressed
+    else if it is a key stroke, then return the value of the key pressed
+    pass one of the above into the next function  */
+
     if (e.key === undefined) {
         passValue(this.value);
     }
     else {
-        this.value = e.key;
-        if (isValidKey (e)) passValue (this.value); 
+        if (isValidKey (e)) passValue (e.key); 
     }
 }
 
 function passValue(input) {
     this.value = input;
-    addOperator (input);
-    if (!operator) { addNumber (input) };
-
-    function addNumber (input) {
-        transformDecimal(input);
-        if (currentNumber.includes('.') && input === '.') {//do nothing
+    let numbers = ['1','2','3','4','5','6','7','8','9','0','.']
+    if (numbers.includes(input)) {
+        !firstNumber ? addNumber1(input) : addNumber2(input);
     }
-        else if (!operator) {currentNumber += input;} 
-        display.innerText = currentNumber;
+    else {addOperator (input);}
+
+    function addNumber1 (input) {
+        if (!oneDecimal(input)) { //do nothing instead of adding more decimal points
+            currentNumber += input;
+            transformDecimal(input); // if the first character is ".", then add "0" in front of it.
+            display.innerText = currentNumber;
+        } 
+    }
+
+    function addNumber2 (input) {
+        if (!oneDecimal(input)) {
+            secondNumber += input;
+            currentNumber = secondNumber;
+            display.innerText = currentNumber;
+        }
+    }
+
+    function oneDecimal (input) {
+        //check if decimal point already exists in the currentNumber and do not add any more if so
+        if (currentNumber.includes('.') && input === '.') {
+            return true;
+        } 
     }
 
     function addOperator (input) {
-        const operators = ['/', '*', '+', '-'];
-        firstNumber = currentNumber;
-        //currentNumber = '';
-        if (operators.includes(input)) {
+//        const operators = ['/', '*', '+', '-'];
+//        if (operators.includes(input)) {
             operator = input;
+            firstNumber = currentNumber;
             topDisplay.innerText = firstNumber + operator;
-        }
+ //       }
     }
 
     function transformDecimal(input) {
