@@ -38,6 +38,7 @@ const topDisplay = document.querySelector ('#last-operation');
 numbers.forEach(number => number.addEventListener('click', pressKey));
 operators.forEach(operator => operator.addEventListener('click', pressKey));
 window.addEventListener('keydown', pressKey); 
+display.innerText = '0';
 
 let operator = '';
 let currentNumber = ''; // used as temporary variable
@@ -75,7 +76,7 @@ function passValue(input) {
     else {addOperator (input);}
 
     function addNumber1 (input) {
-        if (!oneDecimal(input)) { //do nothing instead of adding more decimal points
+        if (!alreadyHasDecimal(input)) { 
             currentNumber += input;
             transformDecimal(input); // if the first character is ".", then add "0" in front of it.
             display.innerText = currentNumber;
@@ -83,14 +84,14 @@ function passValue(input) {
     }
 
     function addNumber2 (input) {
-        if (!oneDecimal(input)) {
+        if (!alreadyHasDecimal(input)) {
             secondNumber += input;
             currentNumber = secondNumber;
             display.innerText = currentNumber;
         }
     }
 
-    function oneDecimal (input) {
+    function alreadyHasDecimal (input) {
         //check if decimal point already exists in the currentNumber and do not add any more if so
         if (currentNumber.includes('.') && input === '.') {
             return true;
@@ -100,14 +101,16 @@ function passValue(input) {
     function addOperator (input) {
 //        const operators = ['/', '*', '+', '-'];
 //        if (operators.includes(input)) {
+//        }
+        if (!currentNumber) {currentNumber = '0'}
             operator = input;
             firstNumber = currentNumber;
             topDisplay.innerText = firstNumber + operator;
- //       }
+
     }
 
     function transformDecimal(input) {
-        if (input === '.' && display.innerText === '' ) {
+        if (input === '.' && display.innerText === '0' ) {
             currentNumber = '0.';
             display.innerText = currentNumber;
         }
