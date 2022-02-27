@@ -119,12 +119,8 @@ function passValue(input) {
     }
 };
     function calculate () {
-        if (!topDisplay.innerText.includes(secondNumber)) {
-            topDisplay.innerText += secondNumber;
-        } 
-        if (!topDisplay.innerText.includes('=')) {
-            topDisplay.innerText += '=';
-        }
         currentNumber = operate (operator, firstNumber, secondNumber);
+        topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`
         display.innerText = currentNumber;
+        firstNumber=currentNumber;
     }
