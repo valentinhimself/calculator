@@ -31,10 +31,17 @@ function operate (operator, num1, num2) {
     }
 }
 
+let operator = '';
+let currentNumber = ''; // used as temporary variable
+let firstNumber = '';
+let secondNumber = '';
+let allowedChars = ['1','2','3','4','5','6','7','8','9','0','.','+','-','*','/','='];
 const numbers = document.querySelectorAll ('.num');
 const operators = document.querySelectorAll ('.operator');
 const display = document.querySelector('#current-operation');
 const topDisplay = document.querySelector ('#last-operation');
+const clearBtn = document.querySelector ('#clear');
+const backspace = document.querySelector ('#backspace');
 //const equality = document.querySelector ('.equality');
 //equality.addEventListener ('click', calculate);
 numbers.forEach(number => number.addEventListener('click', pressKey));
@@ -42,11 +49,16 @@ operators.forEach(operator => operator.addEventListener('click', pressKey));
 window.addEventListener('keydown', pressKey); 
 display.innerText = '0';
 
-let operator = '';
-let currentNumber = ''; // used as temporary variable
-let firstNumber = '';
-let secondNumber = '';
-let allowedChars = ['1','2','3','4','5','6','7','8','9','0','.','+','-','*','/','='];
+clearBtn.addEventListener('click', clearAll);
+
+function clearAll () {
+    firstNumber = '';
+    secondNumber = '';
+    currentNumber = '';
+    operator = '';
+    topDisplay.innerText = '';
+    display.innerText = 0;
+}
 
 function isValidInput (e) {
     /*the function checks if a key stroke is allowed within the calculator
@@ -64,6 +76,12 @@ function pressKey (e) {
     if (e.key === undefined) {
         passValue(this.value);
     }
+    else if (e.key == "Delete") {
+        clearAll();
+    }
+    // else if (e.key == "Backspace") {
+
+    // }
     else {
         if (isValidInput (e)) passValue (e.key); 
     }
@@ -108,7 +126,12 @@ function passValue(input) {
             firstNumber = currentNumber;
             topDisplay.innerText = firstNumber + operator;
         }
-        else {calculate()}
+        else if (secondNumber && input !='='){
+            calculate2();
+        }
+        else {
+            calculate();
+        }
     }
 
     function transformDecimal(input) {
@@ -118,9 +141,18 @@ function passValue(input) {
         }
     }
 };
+
+    function calculate2 () {
+        currentNumber = operate (operator, firstNumber, secondNumber);
+        topDisplay.innerText = `${currentNumber}${operator}`
+        display.innerText = currentNumber;
+        firstNumber=currentNumber;
+    }
+
     function calculate () {
         currentNumber = operate (operator, firstNumber, secondNumber);
         topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`
         display.innerText = currentNumber;
         firstNumber=currentNumber;
     }
+    

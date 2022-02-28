@@ -65,17 +65,17 @@
     background-color:rgb(180, 94, 76);
 }
 
-#delete {
+#backspace {
     background-color: rgb(147, 182, 214);
 }
-#delete:hover {
+#backspace:hover {
     background-color:rgb(127, 132, 176);
 }
-#delete:active {
+#backspace:active {
     background-color:rgb(117, 112, 156);
 }
 
-#clear, #delete {
+#clear, #backspace {
     border-radius: 5px;
     border: solid 1px black;
 
