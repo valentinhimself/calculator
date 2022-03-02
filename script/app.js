@@ -36,6 +36,7 @@ let currentNumber = ''; // used as temporary variable
 let firstNumber = '';
 let secondNumber = '';
 let allowedChars = ['1','2','3','4','5','6','7','8','9','0','.','+','-','*','/','='];
+
 const numbers = document.querySelectorAll ('.num');
 const operators = document.querySelectorAll ('.operator');
 const display = document.querySelector('#current-operation');
@@ -43,7 +44,7 @@ const topDisplay = document.querySelector ('#last-operation');
 const clearBtn = document.querySelector ('#clear');
 const backspace = document.querySelector ('#backspace');
 //const equality = document.querySelector ('.equality');
-//equality.addEventListener ('click', calculate);
+//equality.addEventListener ('click', calculateOnEquality);
 numbers.forEach(number => number.addEventListener('click', pressKey));
 operators.forEach(operator => operator.addEventListener('click', pressKey));
 window.addEventListener('keydown', pressKey); 
@@ -81,15 +82,12 @@ function pressKey (e) {
     else if it is a key stroke, then return the value of the key pressed
     pass one of the above into the next function  */
 
-    if (e.key === undefined) {
-        passValue(this.value);
-    }
-    else if (e.key == "Delete") {
-        clearAll();
-    }
-    else if (e.key == "Backspace") {
-        applyBackspace ();
-    }
+    if (e.key === undefined) passValue(this.value);
+    
+    else if (e.key == "Delete") clearAll();
+    
+    else if (e.key == "Backspace") applyBackspace ();
+
     else {
         if (isValidInput (e)) passValue (e.key); 
     }
@@ -127,18 +125,18 @@ function passValue(input) {
     }
 
     function addOperator (input) {
-       const operators = ['/', '*', '+', '-']; //to exclude '='
-        if (!currentNumber) {currentNumber = '0'} //in case of hitting an operator before selecting a number
+        const operators = ['/', '*', '+', '-']; //to exclude '='
+        if (!currentNumber) {currentNumber = '0'} //in case of hitting an operator before selecting the first number
         if (operators.toString().includes(input) && !secondNumber) { //!secondNumber prevent reassigning operator and firstNumber when inputing secondNumber;
             operator = input;
             firstNumber = currentNumber;
             topDisplay.innerText = firstNumber + operator;
         }
         else if (secondNumber && input !='='){
-            calculate2();
+            calculateOnOperator(); 
         }
-        else {
-            calculate();
+        else if (firstNumber && secondNumber && input == '='){
+            calculateOnEquality();
         }
     }
 
@@ -150,17 +148,17 @@ function passValue(input) {
     }
 };
 
-    function calculate2 () {
+    function calculateOnOperator () {
         currentNumber = operate (operator, firstNumber, secondNumber);
         topDisplay.innerText = `${currentNumber}${operator}`
         display.innerText = currentNumber;
         firstNumber=currentNumber;
+        secondNumber = ''; // reset second number 
     }
 
-    function calculate () {
+    function calculateOnEquality () {
         currentNumber = operate (operator, firstNumber, secondNumber);
         topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`
         display.innerText = currentNumber;
         firstNumber=currentNumber;
     }
-    
