@@ -50,6 +50,7 @@ window.addEventListener('keydown', pressKey);
 display.innerText = '0';
 
 clearBtn.addEventListener('click', clearAll);
+backspace.addEventListener('click', applyBackspace);
 
 function clearAll () {
     firstNumber = '';
@@ -58,6 +59,13 @@ function clearAll () {
     operator = '';
     topDisplay.innerText = '';
     display.innerText = 0;
+}
+
+function applyBackspace () {
+    /*remove the last character in the string 
+    when the string is empty, add '0' to display */
+    currentNumber = currentNumber.slice(0,-1);
+    !currentNumber ? display.innerText = '0' : display.innerText = currentNumber;
 }
 
 function isValidInput (e) {
@@ -79,9 +87,9 @@ function pressKey (e) {
     else if (e.key == "Delete") {
         clearAll();
     }
-    // else if (e.key == "Backspace") {
-
-    // }
+    else if (e.key == "Backspace") {
+        applyBackspace ();
+    }
     else {
         if (isValidInput (e)) passValue (e.key); 
     }
