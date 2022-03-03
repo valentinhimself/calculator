@@ -134,6 +134,8 @@ function passValue(input) {
         }
         else if (secondNumber && input !='='){
             calculateOnOperator(); 
+            operator = input;
+            topDisplay.innerText = `${currentNumber}${operator}`
         }
         else if (firstNumber && secondNumber && input == '='){
             calculateOnEquality();
@@ -150,7 +152,6 @@ function passValue(input) {
 
     function calculateOnOperator () {
         currentNumber = operate (operator, firstNumber, secondNumber);
-        topDisplay.innerText = `${currentNumber}${operator}`
         display.innerText = currentNumber;
         firstNumber=currentNumber;
         secondNumber = ''; // reset second number 
