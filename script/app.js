@@ -102,7 +102,7 @@ function pressKey (e) {
     
     else if (e.key == "Backspace") applyBackspace ();
 
-    else if (firstNumber && secondNumber && e.key == '=' || e.key == 'Enter') calculateOnEquality();
+    else if (firstNumber && secondNumber && e.key === '=' || e.key === 'Enter') calculateOnEquality();
     
     else {
         if (isValidInput (e)) passValue (e.key); 
@@ -135,7 +135,7 @@ function passValue(input) {
 
     function addNumber2 (input) {
         if (!alreadyHasDecimal(input)) {
-            secondNumber += input;
+            secondNumber == '0' ? secondNumber = input : secondNumber += input;
             currentNumber = secondNumber;
             display.innerText = currentNumber;
         }
