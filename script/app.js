@@ -174,8 +174,10 @@ function passValue(input) {
     }
 
     function calculateOnEquality () {
-        currentNumber = operate (operator, firstNumber, secondNumber);
-        topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`
-        display.innerText = currentNumber;
-        firstNumber=currentNumber;
+        if (secondNumber) {
+            currentNumber = operate (operator, firstNumber, secondNumber);
+            topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`
+            display.innerText = currentNumber;
+            firstNumber=currentNumber;
+        }
     }
