@@ -43,8 +43,8 @@ const display = document.querySelector('#current-operation');
 const topDisplay = document.querySelector ('#last-operation');
 const clearBtn = document.querySelector ('#clear');
 const backspace = document.querySelector ('#backspace');
-//const equality = document.querySelector ('.equality');
-//equality.addEventListener ('click', calculateOnEquality);
+const equality = document.querySelector ('.equality');
+equality.addEventListener ('click', calculateOnEquality);
 numbers.forEach(number => number.addEventListener('click', pressKey));
 operators.forEach(operator => operator.addEventListener('click', pressKey));
 window.addEventListener('keydown', pressKey); 
@@ -65,7 +65,7 @@ function clearAll () {
 function applyBackspace () {
     /*remove the last character in the string 
     when the string is empty, add '0' to display */
-    currentNumber = currentNumber.slice(0,-1);
+    currentNumber = currentNumber.toString().slice(0,-1);
     !currentNumber ? display.innerText = '0' : display.innerText = currentNumber;
 }
 
@@ -88,6 +88,8 @@ function pressKey (e) {
     
     else if (e.key == "Backspace") applyBackspace ();
 
+    else if (firstNumber && secondNumber && e.key == '=' || e.key == 'Enter') calculateOnEquality();
+    
     else {
         if (isValidInput (e)) passValue (e.key); 
     }
@@ -125,20 +127,19 @@ function passValue(input) {
     }
 
     function addOperator (input) {
-        const operators = ['/', '*', '+', '-']; //to exclude '='
+        const operators = ['/', '*', '+', '-']; 
         if (!currentNumber) {currentNumber = '0'} //in case of hitting an operator before selecting the first number
-        if (operators.toString().includes(input) && !secondNumber) { //!secondNumber prevent reassigning operator and firstNumber when inputing secondNumber;
-            operator = input;
-            firstNumber = currentNumber;
-            topDisplay.innerText = firstNumber + operator;
-        }
-        else if (secondNumber && input !='='){
-            calculateOnOperator(); 
-            operator = input;
-            topDisplay.innerText = `${currentNumber}${operator}`
-        }
-        else if (firstNumber && secondNumber && input == '='){
-            calculateOnEquality();
+        if (operators.toString().includes(input)) {
+            if (!secondNumber) { //!secondNumber prevent reassigning operator and firstNumber when inputing secondNumber;
+                operator = input;
+                firstNumber = currentNumber;
+                topDisplay.innerText = firstNumber + operator;
+            }
+            else {
+                calculateOnOperator(); 
+                operator = input;
+                topDisplay.innerText = `${currentNumber}${operator}`                
+            }
         }
     }
 
