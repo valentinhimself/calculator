@@ -97,11 +97,19 @@ function pressKey (e) {
 
 function passValue(input) {
     this.value = input;
-    let numbers = ['1','2','3','4','5','6','7','8','9','0','.']
+    let numbers = ['1','2','3','4','5','6','7','8','9','0','.'];
+    fixVariables (input);
     if (numbers.includes(input)) {
         !firstNumber ? addNumber1(input) : addNumber2(input);
     }
     else {addOperator (input);}
+
+    function fixVariables (input='') {
+        /* resets everything if a number is selected after equality without operators first */
+        if (topDisplay.innerText.includes("=") && numbers.includes(input)) {
+            clearAll (); 
+        }
+    }
 
     function addNumber1 (input) {
         if (!alreadyHasDecimal(input)) { 
