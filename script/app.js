@@ -135,7 +135,14 @@ function passValue(input) {
                 firstNumber = currentNumber;
                 topDisplay.innerText = firstNumber + operator;
             }
-            else {
+
+            else if (topDisplay.innerText.includes('=')) {
+                secondNumber = '';
+                operator = input;
+                topDisplay.innerText = `${currentNumber}${operator}`
+            }
+
+            else { // (else if secondNumber)
                 calculateOnOperator(); 
                 operator = input;
                 topDisplay.innerText = `${currentNumber}${operator}`                
