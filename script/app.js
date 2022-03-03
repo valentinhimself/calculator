@@ -62,11 +62,25 @@ function clearAll () {
     display.innerText = 0;
 }
 
+function resetOnBackspace () {
+    /* reset on backspace after equality only*/
+    if (topDisplay.innerText.includes("=")) {
+        clearAll (); 
+    }
+}
+
 function applyBackspace () {
-    /*remove the last character in the string 
-    when the string is empty, add '0' to display */
-    currentNumber = currentNumber.toString().slice(0,-1);
-    !currentNumber ? display.innerText = '0' : display.innerText = currentNumber;
+    /*reset the app after equality;
+    or remove the last character in the string if there is no equality;
+    when the string is empty, show '0' */
+    if (topDisplay.innerText.includes("=")) resetOnBackspace();
+    else {
+        currentNumber = currentNumber.toString().slice(0,-1);
+        !currentNumber ? display.innerText = '0' : display.innerText = currentNumber;
+        if (firstNumber && topDisplay.innerText.includes(operator)) {
+            secondNumber = currentNumber;
+        }
+    }
 }
 
 function isValidInput (e) {
@@ -98,13 +112,13 @@ function pressKey (e) {
 function passValue(input) {
     this.value = input;
     let numbers = ['1','2','3','4','5','6','7','8','9','0','.'];
-    fixVariables (input);
+    resetVariables (input);
     if (numbers.includes(input)) {
         !firstNumber ? addNumber1(input) : addNumber2(input);
     }
-    else {addOperator (input);}
+    else {addOperator (input)};
 
-    function fixVariables (input='') {
+    function resetVariables (input='') {
         /* resets everything if a number is selected after equality without operators first */
         if (topDisplay.innerText.includes("=") && numbers.includes(input)) {
             clearAll (); 
@@ -135,8 +149,9 @@ function passValue(input) {
     }
 
     function addOperator (input) {
+        defaultToZero ();
         const operators = ['/', '*', '+', '-']; 
-        if (!currentNumber) {currentNumber = '0'} //in case of hitting an operator before selecting the first number
+
         if (operators.toString().includes(input)) {
             if (!secondNumber) { //!secondNumber prevent reassigning operator and firstNumber when inputing secondNumber;
                 operator = input;
@@ -152,6 +167,7 @@ function passValue(input) {
 
             else { // (else if secondNumber)
                 calculateOnOperator(); 
+                secondNumber = ''; // reset second number 
                 operator = input;
                 topDisplay.innerText = `${currentNumber}${operator}`                
             }
@@ -166,11 +182,14 @@ function passValue(input) {
     }
 };
 
+    function defaultToZero () {
+        if (!currentNumber) {currentNumber = '0'} //in case of hitting an operator before selecting the first number
+    }
+
     function calculateOnOperator () {
         currentNumber = operate (operator, firstNumber, secondNumber);
         display.innerText = currentNumber;
         firstNumber=currentNumber;
-        secondNumber = ''; // reset second number 
     }
 
     function calculateOnEquality () {
@@ -181,3 +200,6 @@ function passValue(input) {
             firstNumber=currentNumber;
         }
     }
+
+//    TO DO: fix bug for futher calculations when the result is 0
+//    TO DO: Rounding and limiting number of digits on the screen;
