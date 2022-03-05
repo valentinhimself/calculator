@@ -118,7 +118,7 @@ function passValue(input) {
     resetVariables (input);
     if (numbers.includes(input)) {
         if (firstNumber === '') addNumber1 (input); 
-        
+
         else {addNumber2(input)}
     }
     else {addOperator (input)};
@@ -192,19 +192,26 @@ function passValue(input) {
     }
 
     function calculateOnOperator () {
-        currentNumber = operate (operator, firstNumber, secondNumber);
+        currentNumber = parseFloat(operate (operator, firstNumber, secondNumber).toFixed(10));
         display.innerText = currentNumber;
         firstNumber=currentNumber;
+        resetAtCloseToZero ();
     }
 
     function calculateOnEquality () {
         if (secondNumber) {
-            currentNumber = operate (operator, firstNumber, secondNumber);
+            currentNumber = parseFloat(operate (operator, firstNumber, secondNumber).toFixed(10));
             topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`
             display.innerText = currentNumber;
             firstNumber=currentNumber;
+            resetAtCloseToZero ();
         }
     }
 
-//    TO DO: fix bug for futher calculations when the result is 0
+    function resetAtCloseToZero () {
+        if (currentNumber<1e-10) {
+            clearAll();
+        }
+    }
+
 //    TO DO: Rounding and limiting number of digits on the screen;
