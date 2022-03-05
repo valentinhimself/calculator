@@ -102,7 +102,10 @@ function pressKey (e) {
     
     else if (e.key == "Backspace") applyBackspace ();
 
-    else if (firstNumber && secondNumber && e.key === '=' || e.key === 'Enter') calculateOnEquality();
+    else if (firstNumber && secondNumber && e.key === '=' || e.key === 'Enter') {
+        if (e.key === 'Enter') e.preventDefault(); // prevent selecting the last clicked button on "enter"
+        calculateOnEquality();
+    }
     
     else {
         if (isValidInput (e)) passValue (e.key); 
