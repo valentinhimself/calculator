@@ -117,7 +117,9 @@ function passValue(input) {
     let numbers = ['1','2','3','4','5','6','7','8','9','0','.'];
     resetVariables (input);
     if (numbers.includes(input)) {
-        !firstNumber ? addNumber1(input) : addNumber2(input);
+        if (firstNumber === '') addNumber1 (input); 
+        
+        else {addNumber2(input)}
     }
     else {addOperator (input)};
 
