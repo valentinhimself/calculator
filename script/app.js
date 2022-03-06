@@ -60,6 +60,8 @@ function clearAll () {
     operator = '';
     topDisplay.innerText = '';
     display.innerText = 0;
+    display.setAttribute ('style', '');
+    topDisplay.setAttribute ('style', '');
 }
 
 function resetOnBackspace () {
@@ -117,9 +119,13 @@ function passValue(input) {
     let numbers = ['1','2','3','4','5','6','7','8','9','0','.'];
     resetVariables (input);
     if (numbers.includes(input)) {
-        if (firstNumber === '') addNumber1 (input); 
+        if (firstNumber === '') {
+            if (currentNumber.length < 10) addNumber1 (input); 
+        }
 
-        else {addNumber2(input)}
+        else {
+            if (secondNumber.length < 10) addNumber2(input);
+        }
     }
     else {addOperator (input)};
 
@@ -192,7 +198,8 @@ function passValue(input) {
     }
 
     function calculateOnOperator () {
-        currentNumber = parseFloat(operate (operator, firstNumber, secondNumber).toFixed(10));
+        currentNumber = parseFloat(operate (operator, firstNumber, secondNumber).toFixed(6));
+        fitLargeNumber();
         display.innerText = currentNumber;
         firstNumber=currentNumber;
         resetAtCloseToZero ();
@@ -200,7 +207,8 @@ function passValue(input) {
 
     function calculateOnEquality () {
         if (secondNumber) {
-            currentNumber = parseFloat(operate (operator, firstNumber, secondNumber).toFixed(10));
+            currentNumber = parseFloat(operate (operator, firstNumber, secondNumber).toFixed(6));
+            fitLargeNumber();
             topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`
             display.innerText = currentNumber;
             firstNumber=currentNumber;
@@ -213,5 +221,12 @@ function passValue(input) {
             clearAll();
         }
     }
+    function fitLargeNumber () {
+        if (currentNumber > 9999999999999) currentNumber = currentNumber.toExponential(); 
+        if (currentNumber > 9.999999997e+28 || currentNumber.length > 16) {
+            display.setAttribute ('style', 'font-size: 30px; position: relative; top: 10px');
+            topDisplay.style.fontSize = '18px';
+        }
+    }
 
-//    TO DO: Rounding and limiting number of digits on the screen;
+//    TO DO: Wrap the whole thing in a big function
