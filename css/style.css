@@ -87,3 +87,7 @@
     border: solid 1px black;
     border-radius: 5px;
 }
+
+body {
+    background-image: linear-gradient(to right, rgba(0, 140, 255, 0.35),rgba(0, 128, 75, 0.35))
+}
