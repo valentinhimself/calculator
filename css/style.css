@@ -91,3 +91,28 @@
 body {
     background-image: linear-gradient(to right, rgba(0, 140, 255, 0.35),rgba(0, 128, 75, 0.35))
 }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    color: var(--font);
+    font-size: 1rem;
+  }
+  
+.fa-github {
+    margin-left: 1rem;
+    color: var(--font);
+    font-size: 1.4rem;
+    transition: transform 0.6s ease-in-out;
+    color: black;
+}
+  
+.fa-github:hover {
+    transform: rotate(360deg) scale(1.2);
+}
