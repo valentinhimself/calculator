@@ -219,7 +219,7 @@ function startCalculator () {
         }
 
         function resetAtCloseToZero () {
-            if (currentNumber<1e-10) {
+            if (currentNumber > 0 && currentNumber<1e-10) {
                 clearAll();
             }
         }
