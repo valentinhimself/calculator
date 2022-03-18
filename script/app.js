@@ -138,23 +138,29 @@ function startCalculator () {
             }
         }
 
-        function addNumber1 (input) {
-            if (!alreadyHasDecimal(input)) { 
+        function isSecondZero(input) {
+            if (currentNumber === '0' && input == '0'){
+                return true;
+            }
+        }
+
+        function addNumber1(input) {
+            if (!isSecondDecimal(input) && !isSecondZero(input)) { 
                 currentNumber += input;
                 transformDecimal(input); // if the first character is ".", then add "0" in front of it.
                 display.innerText = currentNumber;
             } 
         }
 
-        function addNumber2 (input) {
-            if (!alreadyHasDecimal(input)) {
+        function addNumber2(input) {
+            if (!isSecondDecimal(input)) {
                 secondNumber == '0' ? secondNumber = input : secondNumber += input;
                 currentNumber = secondNumber;
                 display.innerText = currentNumber;
             }
         }
 
-        function alreadyHasDecimal (input) {
+        function isSecondDecimal(input) {
             //check if decimal point already exists in the currentNumber and do not add any more if so
             if (currentNumber.toString().includes('.') && input === '.') {
                 return true;
