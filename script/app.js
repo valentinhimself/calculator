@@ -128,10 +128,9 @@ function startCalculator () {
             else {
                 if (secondNumber.length < 10) addNumber2(input);
             }
-        }
-        else {addOperator (input)};
+        } else addOperator (input);
 
-        function resetVariables (input='') {
+        function resetVariables(input='') {
             /* resets everything if a number is selected after equality without operators first */
             if (topDisplay.innerText.includes("=") && numbers.includes(input)) {
                 clearAll (); 
@@ -167,7 +166,7 @@ function startCalculator () {
             } 
         }
 
-        function addOperator (input) {
+        function addOperator(input) {
             defaultToZero ();
             const operators = ['/', '*', '+', '-']; 
 
@@ -202,30 +201,32 @@ function startCalculator () {
     };
 
         function defaultToZero () {
-            if (!currentNumber) {currentNumber = '0'} //in case of hitting an operator before selecting the first number
+            if (!currentNumber) {
+                currentNumber = '0';
+            } //in case of hitting an operator before selecting the first number
         }
 
         function calculateOnOperator () {
             currentNumber = parseFloat(operate (operator, firstNumber, secondNumber).toFixed(6));
-            fitLargeNumber();
+            fitLargeNumber ();
             display.innerText = currentNumber;
-            firstNumber=currentNumber;
+            firstNumber = currentNumber;
             resetAtCloseToZero ();
         }
 
         function calculateOnEquality () {
             if (secondNumber) {
                 currentNumber = parseFloat(operate (operator, firstNumber, secondNumber).toFixed(6));
-                fitLargeNumber();
+                fitLargeNumber ();
                 topDisplay.innerText = `${firstNumber}${operator}${secondNumber}=`
                 display.innerText = currentNumber;
-                firstNumber=currentNumber;
+                firstNumber = currentNumber;
                 resetAtCloseToZero ();
             }
         }
 
         function resetAtCloseToZero () {
-            if (currentNumber > 0 && currentNumber<1e-10) {
+            if (currentNumber > 0 && currentNumber < 1e-10) {
                 clearAll();
             }
         }
